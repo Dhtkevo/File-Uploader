@@ -19,7 +19,7 @@ const registerUserPost = async (
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     await createUser(req.body.username, hashedPassword);
-    res.redirect("/");
+    res.redirect("/users/login");
   } catch (error) {
     console.error(error);
     next(error);
@@ -28,7 +28,7 @@ const registerUserPost = async (
 
 const loginUserPost = passport.authenticate("local", {
   successRedirect: "/",
-  failureRedirect: "/error",
+  failureRedirect: "/users/login",
 });
 
 module.exports = {

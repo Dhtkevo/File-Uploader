@@ -11,6 +11,7 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 import { PrismaClient } from "@prisma/client";
 import { getUserById, getUserByUsername } from "./db/queries";
 import bcrypt from "bcryptjs";
+import { ensureAuthenticated } from "./auth/auth";
 const userRouter = require("./routes/userRoutes");
 
 app.use(
@@ -68,15 +69,21 @@ passport.deserializeUser(async (id: number, done: any) => {
   }
 });
 
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use("/users", userRouter);
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", ensureAuthenticated, (req: Request, res: Response) => {
   res.render("index");
 });
 
