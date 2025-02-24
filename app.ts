@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-import express, { Application, Request, Response } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 const app: Application = express();
 import path from "node:path";
 const PORT = process.env.PORT || 3000;
@@ -11,6 +11,7 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 import { PrismaClient } from "@prisma/client";
 import { getUserById, getUserByUsername } from "./db/queries";
 import bcrypt from "bcryptjs";
+const userRouter = require("./routes/userRoutes");
 
 app.use(
   expressSession({
@@ -59,7 +60,7 @@ passport.serializeUser((user: User, done: any) => {
 
 passport.deserializeUser(async (id: number, done: any) => {
   try {
-    const user = getUserById(id);
+    const user = await getUserById(id);
 
     done(null, user);
   } catch (err) {
@@ -73,8 +74,15 @@ app.use(express.urlencoded({ extended: false }));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use("/users", userRouter);
+
 app.get("/", (req: Request, res: Response) => {
   res.render("index");
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
 });
 
 app.listen(PORT, () => {
