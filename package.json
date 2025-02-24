@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "bcryptjs": "^3.0.1",
+    "@prisma/client": "^6.4.1",
+    "@quixo3/prisma-session-store": "^3.1.13",
+    "@types/passport": "^1.0.17",
+    "bcryptjs": "^3.0.2",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
@@ -8,13 +11,14 @@
     "express-session": "^1.18.1",
     "express-validator": "^7.2.1",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "prisma": "^6.4.1"
   },
   "devDependencies": {
     "@tsconfig/node12": "^12.1.4",
     "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.1",
     "@types/node": "^22.13.5",
-    "prisma": "^6.3.1",
     "tsx": "^4.19.3"
   }
 }
