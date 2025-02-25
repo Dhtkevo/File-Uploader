@@ -12,6 +12,7 @@ import { PrismaClient } from "@prisma/client";
 import { getUserById, getUserByUsername } from "./db/queries";
 import bcrypt from "bcryptjs";
 import { ensureAuthenticated } from "./auth/auth";
+import { fileRouter } from "./routes/fileRoutes";
 const userRouter = require("./routes/userRoutes");
 
 app.use(
@@ -80,6 +81,8 @@ app.use((req, res, next) => {
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+app.use("/files", fileRouter);
 
 app.use("/users", userRouter);
 
