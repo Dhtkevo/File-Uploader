@@ -52,3 +52,7 @@ export const updateFolder = async (
     data: { name: newFolderName },
   });
 };
+
+export const deleteFolder = async (name: string) => {
+  await prisma.folder.delete({ where: { name: name } });
+};

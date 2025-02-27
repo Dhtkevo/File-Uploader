@@ -4,7 +4,9 @@ import {
   getCreateFolderForm,
   createFolderPost,
   getUpdateFolderForm,
-  UpdateFolderPost,
+  updateFolderPost,
+  getDeleteFolderForm,
+  deleteFolderPost,
 } from "../controllers/folderController";
 
 export const folderRouter = express.Router();
@@ -17,4 +19,8 @@ folderRouter.post("/new", createFolderPost);
 
 folderRouter.get("/update", getUpdateFolderForm);
 
-folderRouter.post("/update", UpdateFolderPost);
+folderRouter.post("/update", updateFolderPost);
+
+folderRouter.get("/delete", getDeleteFolderForm);
+
+folderRouter.post("/delete", deleteFolderPost);
