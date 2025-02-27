@@ -42,3 +42,13 @@ export const createFolderForUser = async (user_id: number, name: string) => {
     },
   });
 };
+
+export const updateFolder = async (
+  folderName: string,
+  newFolderName: string
+) => {
+  const updatedFolder = await prisma.folder.update({
+    where: { name: folderName },
+    data: { name: newFolderName },
+  });
+};
