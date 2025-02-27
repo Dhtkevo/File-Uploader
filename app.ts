@@ -14,6 +14,8 @@ import bcrypt from "bcryptjs";
 import { ensureAuthenticated } from "./auth/auth";
 import { fileRouter } from "./routes/fileRoutes";
 const userRouter = require("./routes/userRoutes");
+import { folderRouter } from "./routes/folderRoutes";
+import { User } from "@prisma/client";
 
 app.use(
   expressSession({
@@ -50,12 +52,6 @@ passport.use(
   })
 );
 
-interface User {
-  id: number;
-  username: string;
-  password: string;
-}
-
 passport.serializeUser((user: User, done: any) => {
   done(null, user.id);
 });
@@ -81,6 +77,8 @@ app.use((req, res, next) => {
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+app.use("/folders", folderRouter);
 
 app.use("/files", fileRouter);
 

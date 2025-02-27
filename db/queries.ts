@@ -28,3 +28,17 @@ export const createUser = async (username: string, password: string) => {
     },
   });
 };
+
+export const getFoldersFromUser = async (user_id: number) => {
+  const folders = await prisma.folder.findMany({ where: { userId: user_id } });
+  return folders;
+};
+
+export const createFolderForUser = async (user_id: number, name: string) => {
+  const newFolder = await prisma.folder.create({
+    data: {
+      name: name,
+      userId: user_id,
+    },
+  });
+};
