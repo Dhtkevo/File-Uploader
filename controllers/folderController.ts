@@ -4,6 +4,7 @@ import {
   createFolderForUser,
   updateFolder,
   deleteFolder,
+  getFolderByName,
 } from "../db/queries";
 
 export const getUserFolders = async (req: Request, res: Response) => {
@@ -43,4 +44,9 @@ export const getDeleteFolderForm = (req: Request, res: Response) => {
 export const deleteFolderPost = async (req: Request, res: Response) => {
   await deleteFolder(req.body.folderName);
   res.redirect("/folders");
+};
+
+export const getFolderDetailsView = async (req: Request, res: Response) => {
+  const folder = await getFolderByName(req.params.folderName);
+  res.render("viewFolder", { folder });
 };
